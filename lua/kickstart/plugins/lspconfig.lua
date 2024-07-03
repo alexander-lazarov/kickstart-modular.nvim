@@ -207,7 +207,7 @@ return {
             local cmd
 
             if server_name == 'rubocop' then
-              cmd = { 'bundle', 'exec', os.getenv 'HOME' .. '/.rbenv/shims/rubocop', '--lsp' }
+              cmd = { os.getenv 'HOME' .. '/.rbenv/shims/bundle', 'exec', os.getenv 'HOME' .. '/.rbenv/shims/rubocop', '--lsp' }
             else
               cmd = nil
             end
