@@ -194,6 +194,26 @@ return {
             },
           },
         },
+
+        rubocop = {
+          cmd = { 'bin/bundle', 'exec', 'rubocop', '--lsp' },
+        },
+
+        solargraph = {
+          cmd = { os.getenv 'HOME' .. '/.rbenv/shims/solargraph', 'stdio' },
+          settings = {
+            solargraph = {
+              autoformat = false,
+              formatting = false,
+              completion = true,
+              diagnostic = true,
+              folding = true,
+              references = true,
+              rename = true,
+              symbols = true,
+            },
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -215,19 +235,6 @@ return {
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
-            local cmd
-
-            if server_name == 'rubocop' then
-              cmd = { os.getenv 'HOME' .. '/.rbenv/shims/bundle', 'exec', os.getenv 'HOME' .. '/.rbenv/shims/rubocop', '--lsp' }
-            else
-              cmd = nil
-            end
-
-            require('lspconfig')[server_name].setup {
-              capabilities = capabilities,
-              settings = servers[server_name],
-              cmd = cmd,
-            }
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
