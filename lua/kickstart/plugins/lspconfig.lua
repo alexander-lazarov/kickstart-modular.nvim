@@ -214,8 +214,27 @@ return {
 
       require('mason-lspconfig').setup {
         handlers = {
-          require('lspconfig').rubocop.setup { cmd = { 'bin/bundle', 'exec', 'rubocop', '--lsp' } },
-          require('lspconfig').stylua.setup {},
+          function(server_name)
+            local cmd
+
+            if server_name == 'rubocop' then
+              cmd = { os.getenv 'HOME' .. '/.rbenv/shims/bundle', 'exec', os.getenv 'HOME' .. '/.rbenv/shims/rubocop', '--lsp' }
+            else
+              cmd = nil
+            end
+
+            require('lspconfig')[server_name].setup {
+              capabilities = capabilities,
+              settings = servers[server_name],
+              cmd = cmd,
+            }
+            local server = servers[server_name] or {}
+            -- This handles overriding only values explicitly passed
+            -- by the server configuration above. Useful when disabling
+            -- certain features of an LSP (for example, turning off formatting for ts_ls)
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            require('lspconfig')[server_name].setup(server)
+          end,
         },
       }
     end,
