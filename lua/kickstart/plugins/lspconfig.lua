@@ -209,20 +209,8 @@ return {
           cmd = { 'bin/bundle', 'exec', 'rubocop', '--lsp' },
         },
 
-        solargraph = {
-          cmd = { os.getenv 'HOME' .. '/.rbenv/shims/solargraph', 'stdio' },
-          settings = {
-            solargraph = {
-              autoformat = false,
-              formatting = false,
-              completion = true,
-              diagnostic = true,
-              folding = true,
-              references = true,
-              rename = true,
-              symbols = true,
-            },
-          },
+        ruby_lsp = {
+          cmd = { os.getenv 'HOME' .. '/.rbenv/shims/ruby-lsp' },
         },
       }
 
