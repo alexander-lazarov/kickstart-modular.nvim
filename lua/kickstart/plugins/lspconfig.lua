@@ -236,10 +236,6 @@ return {
           },
         },
 
-        rubocop = {
-          cmd = { 'bin/bundle', 'exec', 'rubocop', '--lsp' },
-        },
-
         ruby_lsp = {
           cmd = { os.getenv 'HOME' .. '/.rbenv/shims/ruby-lsp' },
         },
