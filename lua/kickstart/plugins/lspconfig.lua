@@ -274,6 +274,17 @@ return {
           end,
         },
       }
+
+      -- Suppress pending migration popup when editing migration files
+      local original_showMessageRequest = vim.lsp.handlers['window/showMessageRequest']
+      vim.lsp.handlers['window/showMessageRequest'] = function(err, result, ctx, config)
+        if result and result.message and result.message:match 'Migrations are pending' then
+          if vim.api.nvim_buf_get_name(0):match 'db/migrate/' then
+            return vim.NIL
+          end
+        end
+        return original_showMessageRequest(err, result, ctx, config)
+      end
     end,
   },
 }
