@@ -20,6 +20,11 @@ return {
         -- enables syntax highlighting and other treesitter features
         vim.treesitter.start(buf, language)
 
+        -- enable additional vim regex highlighting for ruby
+        if language == 'ruby' then
+          vim.bo[buf].syntax = 'on'
+        end
+
         -- enables treesitter based folds
         -- for more info on folds see `:help folds`
         -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
